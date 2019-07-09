@@ -33,38 +33,65 @@
 % and table of contents.
 \section{Differential Privacy}
 
-\begin{frame}{Hypothesis Tests}
-Is observed data $D$ consistent with a proposed model, $H_0$ (null hypothesis)?\pause
-
-\bigskip
-% SLIDE 1
-To carry out a hypothesis test: 
-\pause
-\begin{enumerate}
-\item Compute a \textit{test statistic}, $t = T(D)$. \pause
-\item Compute a $p$-value, $p = \Pr[T(D) \geq t \mid  D \leftarrow H_0]$. 
-\begin{itemize}
-\item Compute where $t$ falls on the reference distribution for $T$ \pause
-\end{itemize}
-\item Compare $p$ to a preset value $\alpha$ (usually .05). Reject $H_0$ if $p < \alpha$.
-\end{enumerate}
+\begin{frame}{Observed Data, $n=30$}
 \begin{figure}
-  \includegraphics[scale=0.5]{images/pvalues}
+  \includegraphics[scale=0.5]{simulation/observed-plot}
 \end{figure}
+\pause
+Are gene allele and tumor size dependent?
+\end{frame}
+
+\begin{frame}{Metric for dependency}
+
+\begin{equation*}
+F\text{-test} = \frac{\text{Variation between groups}}{\text{In-group variation}} \pause 
+\end{equation*}
+
+\begin{equation*}
+\ssa(D) = \sum_{j=1}^{k} n_j (\bar{y}_j - \bar{y})^2/(k-1)
+\end{equation*}
+
+\begin{equation*}
+\sse(D) = \sum_{i=1}^{n}  (y_{i}-\bar{y}_{c_i})^2/(n-k)
+\end{equation*}
 \end{frame}
 
 
-% SLIDE 2
-\begin{frame}{Hypothesis Tests}
-A good hypothesis test: \pause
-\begin{enumerate}
-    \item Has a known reference distribution \pause
-    \item Quickly diverges from the reference distribution if $H_0$ is false
-\end{enumerate}
+\begin{frame}{Simulate Random Data}
+\begin{figure}
+  \includegraphics[scale=0.60]{simulation/null-plots}
+\end{figure}
+\end{frame}
+
+\begin{frame}{}
+\begin{figure}
+  \includegraphics[scale=0.85]{simulation/null-dist}
+\end{figure} 
+Now do we think our data supports independence of gene allele and tumor size?
+\end{frame}
+
+\begin{frame}{Why is $F$-test optimal?}
+\pause
+High probability of indicating dependence when variables \emph{are} dependent \ldots\pause  
+
+\bigskip
+\ldots even when dataset is small.
+
 \pause
 \begin{definition}[Power]
 The \textbf{power} of a hypothesis test is the probability it rejects $H_0$.  It depends on the alternate distribution $H_A$ and $n$.
 \end{definition}
+\bigskip 
+
+\pause
+Goal of any test statistic is achieving high power$^*$.
+\end{frame}
+
+\begin{frame}{Observed Data, $n=30$}
+\begin{figure}
+  \includegraphics[scale=0.5]{simulation/observed-plot}
+\end{figure}
+What if we want to keep this data private?
 \end{frame}
 
 % SLIDE 3
@@ -117,7 +144,6 @@ where $Y \leftarrow \lap(\Delta f/\varepsilon)$. The Laplace mechanism is $\vare
 \begin{itemize}
 \item Binomial data [AS18] (Proven optimal!) \pause
 \item Difference of two means [OHK15, DNLI18] \pause
-\item Survival analysis [NH17] \pause
 \item Linear regression [BRMC17, Sheffet17] \pause
 \end{itemize}
 \end{itemize}
@@ -149,25 +175,6 @@ Earlier work is often missing: \pause
 \end{itemize}
 \end{frame}
 
-
-% SLIDE 7
-\begin{frame}{Particular Hypothesis Test: ANOVA}
-ANOVA tests independence of two variables, one continuous and one categorical.\pause
-\bigskip
-
-$H_0=$ the within-category means are all equal \pause
-\begin{equation*}
-F(D) = \frac{\ssa(D)/(k-1)}{\sse(D)/(n-k)}
-\end{equation*} 
-\pause
-\begin{equation*}
-\ssa(D) = \sum_{j=1}^{k} n_j (\bar{y}_j - \bar{y})^2.
-\end{equation*}
-\pause
-\begin{equation*}
-\sse(D) = \sum_{i=1}^{n}  (y_{i}-\bar{y}_{c_i})^2.
-\end{equation*}
-\end{frame}
 
 % SLIDE 8
 \begin{frame}{Private ANOVA [CBRG18]}
