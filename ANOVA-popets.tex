@@ -3,6 +3,7 @@
 \usepackage{ulem}
 \usepackage{xspace}
 \usepackage{xcolor}
+\usepackage{centernot}
 
 
 \newcommand{\sse}{\textit{SSE}\xspace}
@@ -154,30 +155,7 @@ Earlier work is often missing: \pause
 \end{itemize}
 \end{frame}
 
-% SLIDE 6
-\begin{frame}{Unique Challenges of Private Hypothesis Testing}
-\begin{itemize}
-    \item How to compute $p$-value? \pause
-        \begin{itemize}
-            \item Reference distribution is no longer closed-form \pause
-            \item Solution: simulate it
-        \end{itemize}
-    \item Lots of tricky details \pause
-        \begin{itemize}
-            \item Ex: negative private estimates of standard deviation because of negative noise? \pause
-            \item Solution: ask the statistician \pause
-        \end{itemize}
-    \item Low statistical power \pause
-        \begin{itemize}
-            \item Need a lot of data/impractical \pause
-            \item Main point of improvement
-        \end{itemize}
-\end{itemize}
-\end{frame}
-
-
-% SLIDE 8
-\begin{frame}{Private ANOVA [CBRG18]}
+\begin{frame}{Private $F$-statistic [CBRG18]}
 Assume data is on the $[0,1]$ interval. \pause
 \begin{theorem}
 \sse has sensitivity bounded by 7.
@@ -198,29 +176,33 @@ $$\widehat{F}(D) = \frac{\widehat{\ssa}(D)/(k-1)}{\widehat{\sse}(D)/(n-k)}$$
 \bigskip
 
  \pause
-Problem: The reference distribution is a mess. \pause
-\begin{itemize}
-\item Simulate it.
-\end{itemize}
-
- \pause
-Problem: The reference distribution is no longer scale free.  \pause
-\begin{itemize}
-\item Luckily, $\widehat{\sse}$ is a variance estimate.  \pause
-\item Empirically checked: good enough, type 1 error rate bounded by $\alpha$
-\end{itemize}
+ \centering
+Problem: What is the reference distribution now?
 \end{frame}
 
-% SLIDE 10
+
+\begin{frame}{Private ANOVA [CBRG18]}
+\begin{figure}
+  \includegraphics[scale=0.3]{images/noisy-ref-dist}
+\end{figure} 
+\centering
+Public reference distribution gives inaccurate $p$-values.
+\end{frame}
+
+
 \begin{frame}{Private ANOVA [CBRG18]}
   \begin{figure}
-  \includegraphics[scale=0.5]{images/campbellpower}
+  \includegraphics[scale=0.45]{images/campbellpower}
   \end{figure}
+  \begin{definition}[Power]
+The \textbf{power} of a hypothesis test is the probability it rejects $H_0$.  It depends on the alternate distribution $H_A$ and $n$.
+\end{definition}
 \end{frame}
 
-% SLIDE 11
+
 \begin{frame}{Improving ANOVA [\textcolor{red}{S}HGRGB19]}
-Create a new test statistic! \pause
+Are there other ways of measuring ``dispersion'' (analogous to variance)? \pause
+$$(x_1 - x_2)^2, \quad \lvert x_1 - x_2 \rvert, \text{ or maybe }\lvert x_1 - x_2 \rvert^?$$ 
 \begin{align*}
 \ssa(D) = \sum_{j=1}^{k} n_j (\bar{y}_j - \bar{y})^2  &\Longrightarrow \textcolor{blue}{ \sa(D) = \sum_{j=1}^{k} n_j |\bar{y}_j - \bar{y}| }\\  
 \sse(D) = \sum_{i=1}^{n}  (y_{i}-\bar{y}_{c_i})^2  &\Longrightarrow \textcolor{blue}{\se(D) = \sum_{i=1}^{n}  |y_{i}-\bar{y}_{c_i}| } \\  
@@ -239,11 +221,16 @@ The new $F_1$ statistic has: \pause
 \begin{frame}{Improving ANOVA [\textcolor{red}{S}HGRGB19]}
 Making $F_1$ private \pause
 \begin{enumerate}
-    \item Use Laplace mechanism as in [CBRG18] \pause
-    \item Simulate reference distribution for computing $p$-value
+    \item Use Laplace mechanism on $\se$ and $\sa$
     \begin{itemize}
-        \item Problem: need standard deviation \pause
+    \item $\widehat{\sa} = F_1 = \sa + \lap(4/\rho\varepsilon)$
+    \item $\widehat{\se} = F_1 = \sa + \lap(3/(1-\rho)\varepsilon)$
+    \item $\widehat{F}_1 = \frac{\widehat{\sa}/(k-1)}{\widehat{\se}/(n-k)}$
     \end{itemize}
+    \item Use simulation for reference distribution
+    		\begin{itemize}
+       		 \item Problem: need standard deviation \pause
+    		\end{itemize}
     \item Private estimate of standard deviation:  
     \begin{itemize}
         \item Allocate some of epsilon budget? \pause Makes power worse \pause
@@ -253,22 +240,21 @@ Making $F_1$ private \pause
 \bigskip
 
 $$\hat{\sigma} = \sqrt{\pi/2} \cdot \frac{\widehat{SE}}{(N-k)} $$
-\end{frame}
-
-\begin{frame}{Validity of $p$-values}
-    \begin{figure}
-  \includegraphics[scale=0.1]{images/valid-pvals}
-  \end{figure}
+\pause
+\centering
+Note: empirically verified to have valid $p$-values.
 \end{frame}
 
 
-\begin{frame}{Power of $F_1$ test}
+
+\begin{frame}{}
   \begin{figure}
-  \includegraphics[scale=0.1]{images/f1-vs-f2}
+  \includegraphics[scale=0.12]{images/f1-vs-f2}
   \end{figure}
-  Power comparision at $\varepsilon=1$.  $F$ achieves 80\% power with 4500 observations.  $F_1$ requires 300.
+  \centering
+  \pause
+  Optimal public test $\centernot \implies$ optimal private test \footnote{In figure: $\varepsilon = 1, \mu = [0.35, 0.5, 0.65], \text{ and } \sigma = 0.15$}.
 \end{frame}
-
 
 \begin{frame}{Further Optimization}
 \end{frame}
