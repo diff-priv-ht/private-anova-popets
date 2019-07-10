@@ -202,7 +202,7 @@ The \textbf{power} of a hypothesis test is the probability it rejects $H_0$.  It
 
 \begin{frame}{Improving ANOVA [\textcolor{red}{S}HGRGB19]}
 Are there other ways of measuring ``dispersion'' (analogous to variance)? \pause
-$$(x_1 - x_2)^2, \quad \lvert x_1 - x_2 \rvert, \text{ or maybe }\lvert x_1 - x_2 \rvert^?$$ 
+$$(x_i - \bar{x})^2, \quad \lvert x_i - \bar{x} \rvert, \text{ or maybe }\lvert x_i - \bar{x} \rvert^?$$  \pause
 \begin{align*}
 \ssa(D) = \sum_{j=1}^{k} n_j (\bar{y}_j - \bar{y})^2  &\Longrightarrow \textcolor{blue}{ \sa(D) = \sum_{j=1}^{k} n_j |\bar{y}_j - \bar{y}| }\\  
 \sse(D) = \sum_{i=1}^{n}  (y_{i}-\bar{y}_{c_i})^2  &\Longrightarrow \textcolor{blue}{\se(D) = \sum_{i=1}^{n}  |y_{i}-\bar{y}_{c_i}| } \\  
@@ -219,59 +219,75 @@ The new $F_1$ statistic has: \pause
 
 
 \begin{frame}{Improving ANOVA [\textcolor{red}{S}HGRGB19]}
-Making $F_1$ private \pause
+Computing $F_1$ privately \pause
 \begin{enumerate}
-    \item Use Laplace mechanism on $\se$ and $\sa$
-    \begin{itemize}
-    \item $\widehat{\sa} = F_1 = \sa + \lap(4/\rho\varepsilon)$
-    \item $\widehat{\se} = F_1 = \sa + \lap(3/(1-\rho)\varepsilon)$
-    \item $\widehat{F}_1 = \frac{\widehat{\sa}/(k-1)}{\widehat{\se}/(n-k)}$
-    \end{itemize}
-    \item Use simulation for reference distribution
-    		\begin{itemize}
-       		 \item Problem: need standard deviation \pause
-    		\end{itemize}
-    \item Private estimate of standard deviation:  
-    \begin{itemize}
-        \item Allocate some of epsilon budget? \pause Makes power worse \pause
-        \item Solution: derive an unbiased estimator for $\sigma$ \pause
-    \end{itemize}
+	\item $\widehat{\sa}  = \sa + \lap(4/\rho\varepsilon)$
+    \item $\widehat{\se} = \sa + \lap(3/(1-\rho)\varepsilon)$ \pause
+    \item $\widehat{F}_1 = \frac{\widehat{\sa}/(k-1)}{\widehat{\se}/(n-k)}$ \pause
 \end{enumerate}
-\bigskip
-
-$$\hat{\sigma} = \sqrt{\pi/2} \cdot \frac{\widehat{SE}}{(N-k)} $$
-\pause
-\centering
-Note: empirically verified to have valid $p$-values.
+Where $\rho$ denotes epsilon allocation
+\begin{itemize}
+	\item Empirically checked: optimal $\rho \approx 0.7$ \pause
+\end{itemize}
+Computing accurate $p$-values \pause
+\begin{itemize}
+	\item Simulate reference distribution of $\widehat{F}_1$ \pause
+	\item Problem: reference distribution depends on $\sigma$
+\end{itemize}
 \end{frame}
 
+
+\begin{frame}{Improving ANOVA [\textcolor{red}{S}HGRGB19]}
+Need private estimate of $\sigma$ \pause
+\begin{itemize}
+	\item Allocate some of epsilon budget? \pause
+	\item Solution: derive an unbiased estimator for $\sigma$ \pause
+\end{itemize}
+\bigskip
+
+$$\hat{\sigma} = \sqrt{\pi/2} \cdot \frac{\widehat{SE}}{(N-k)} $$ \pause
+\bigskip
+Proceed with simulation
+\bigskip
+
+Empirically verified to have valid $p$-values.
+\end{frame}
 
 
 \begin{frame}{}
   \begin{figure}
   \includegraphics[scale=0.12]{images/f1-vs-f2}
   \end{figure}
-  \centering
-  \pause
-  Optimal public test $\centernot \implies$ optimal private test \footnote{In figure: $\varepsilon = 1, \mu = [0.35, 0.5, 0.65], \text{ and } \sigma = 0.15$}.
+
 \end{frame}
 
 \begin{frame}{Further Optimization}
+Are there other ways of measuring ``dispersion'' (analogous to variance)? 
+$$(x_i - \bar{x})^2, \quad \lvert x_i - \bar{x} \rvert, \text{ or maybe }\lvert x_i - \bar{x} \rvert^?$$  \pause
+
+Perhaps a different exponent? \pause Turns out 1 is optimal.
 \end{frame}
 
-\begin{frame}{New Developments [CKSBG19]}
+\begin{frame}{Conclusion}
+\large In the private framework \ldots \par
+ \normalsize
+\begin{itemize}
+	\item Not limited to closed-form test statistics
+	\item Room for massive power gains 
+	\item Optimal public test $\centernot \implies$ optimal private test
+\end{itemize}
 
-Kruskal-Wallis test analogous to F-test \pause
-\bigskip 
+\large \ldots all of statistics is fair game.
+ \normalsize
+ 
+ \begin{block}{New developments}
+[CKSBG19] gained another order of magnitude improvement. See \textit{Differentially Private Nonparametric Hypothesis Testing} at CCS `19.
+ \end{block}
 
-Modified KW test, similar methods as [\textcolor{red}{S}HGRGB19] \pause
-
-\begin{figure}
-  \includegraphics[scale=0.075]{images/anova_comp}
-  \end{figure}
-  
-  For 80\% power, need only 23\% as much data as $F_1$ ([\textcolor{red}{S}HGRGB19]) \ldots \pause and about 1-2\% as much data as $F_2$ ([CBRG18])
+This material is based upon work supported by the National Science Foundation under Grant No. SaTC-1817245 and by the Gillespie Family Student Research Fund.
 \end{frame}
+
+
 
 \begin{frame}{}
     \begin{center}
