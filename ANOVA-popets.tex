@@ -5,6 +5,19 @@
 \usepackage{xcolor}
 \usepackage{centernot}
 
+% Formatting/color
+\definecolor{ReedRed}{RGB}{ 167, 14, 22} 
+\definecolor{ReedGrey}{RGB}{ 191, 175, 159}
+\definecolor{ReedRed2}{RGB}{ 94, 5, 1}
+
+\setbeamercolor{palette primary}{bg=ReedRed,fg=white}
+\setbeamercolor{palette secondary}{bg=ReedRed2, fg=white}
+\setbeamercolor{palette tertiary}{bg=ReedRed,fg=white}
+\setbeamercolor{palette quaternary}{bg=ReedRed,fg=white}
+\setbeamercolor{structure}{fg=ReedRed} % itemize, enumerate, etc
+\setbeamercolor{title}{fg=ReedRed} % itemize, enumerate, etc
+
+\useinnertheme{circles} %replace shiny circles with normal ones
 
 \newcommand{\sse}{\textit{SSE}\xspace}
 \newcommand{\ssa}{\textit{SSA}\xspace}
@@ -16,13 +29,25 @@
 \beamertemplatenavigationsymbolsempty
 
 \title[Improved Private ANOVA]{Improved Differentially Private Analysis of Variance}
-\author[Marika Swanberg]{\textcolor{red}{Marika Swanberg} \and Ira Globus-Harris \and Iris Griffith \and \newline Anna Ritz \and  Andrew Bray \and Adam Groce}
-\date{Reed College}
+\author[Marika Swanberg]{\textcolor{blue}{Marika Swanberg} \and Ira Globus-Harris \and Iris Griffith \and \newline Anna Ritz \and  Andrew Bray \and Adam Groce}
+\date{}
 
 \begin{document}
 
 \begin{frame}
 \titlepage
+
+\begin{figure}[!tbp]
+  \centering
+  \begin{minipage}[b]{0.45\textwidth}
+    \includegraphics[width=\textwidth]{images/reed-logo}
+  \end{minipage}
+  \hfill
+  \begin{minipage}[b]{0.45\textwidth}
+    \includegraphics[width=\textwidth]{images/BU-logo}
+  \end{minipage}
+\end{figure}
+
 \end{frame}
 
 %\begin{frame}{Outline}
@@ -269,22 +294,27 @@ Perhaps a different exponent? \pause Turns out 1 is optimal.
 \end{frame}
 
 \begin{frame}{Conclusion}
-\large In the private framework \ldots \par
+\large In the private framework \ldots \par \pause
  \normalsize
 \begin{itemize}
-	\item Not limited to closed-form test statistics
-	\item Room for massive power gains 
-	\item Optimal public test $\centernot \implies$ optimal private test
+	\item Not limited to closed-form test statistics \pause
+	\item Room for massive power gains \pause
+	\item Optimal public test $\centernot \implies$ optimal private test \pause
 \end{itemize}
 
-\large \ldots all of statistics is fair game.
+\large \ldots all of statistics is fair game. \pause
  \normalsize
  
  \begin{block}{New developments}
 [CKSBG19] gained another order of magnitude improvement. See \textit{Differentially Private Nonparametric Hypothesis Testing} at CCS `19.
- \end{block}
+ \end{block} \pause
+Funding
+\begin{figure}
+\includegraphics[width=0.4\textwidth]{images/reed-logo}%
+\includegraphics[width=0.2\textwidth]{images/NSF-logo}
+\end{figure}
 
-This material is based upon work supported by the National Science Foundation under Grant No. SaTC-1817245 and by the Gillespie Family Student Research Fund.
+%This material is based upon work supported by the National Science Foundation under Grant No. SaTC-1817245 and by the Gillespie Family Student Research Fund.
 \end{frame}
 
 
