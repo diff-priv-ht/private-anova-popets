@@ -64,11 +64,11 @@
   \includegraphics[scale=0.5]{simulation/observed-plot}
 \end{figure}
 \pause
-Are gene allele and tumor size dependent?
+Are treatment type and post-treatment tumor size dependent?
 \end{frame}
 
 \begin{frame}{Metric for dependency}
-
+\pause
 \begin{equation*}
 F\text{-test} = \frac{\text{Variation between groups}}{\text{In-group variation}} \pause 
 \end{equation*}
@@ -83,7 +83,7 @@ F\text{-test} = \frac{\text{Variation between groups}}{\text{In-group variation}
 \end{frame}
 
 
-\begin{frame}{Simulate Random Data}
+\begin{frame}{Simulate Null Data}
 \begin{figure}
   \includegraphics[scale=0.60]{simulation/null-plots}
 \end{figure}
@@ -91,9 +91,8 @@ F\text{-test} = \frac{\text{Variation between groups}}{\text{In-group variation}
 
 \begin{frame}{}
 \begin{figure}
-  \includegraphics[scale=0.85]{simulation/null-dist}
+  \includegraphics[scale=0.9]{simulation/null-dist}
 \end{figure} 
-Now do we think our data supports independence of gene allele and tumor size?
 \end{frame}
 
 \begin{frame}{Why is $F$-test optimal?}
@@ -122,7 +121,7 @@ What if we want to keep this data private?
 
 % SLIDE 3
 \begin{frame}{Differential privacy [DMNS06]}
-
+\pause
 \begin{definition}
 Two databases are \textbf{neighboring} if they differ only in the data of one individual.
 \end{definition}
@@ -137,8 +136,9 @@ A query $f$ is \textbf{$\varepsilon$-differentially private} if for all neighbor
 
 % SLIDE 4
 \begin{frame}{Properties of differential privacy [DMNS06]}
+\pause
 \begin{theorem}[Post-processing]
-If $f$ is $\varepsilon$-differentially private then for any (randomized) function $g$, then if $h(D) = g(f(D)$, $h$ is also $\varepsilon$-differentially private.
+If $f$ is $\varepsilon$-differentially private then for any (randomized) function $g$, then if $h(D) = g(f(D))$, $h$ is also $\varepsilon$-differentially private.
 \end{theorem}
 \pause
 \begin{theorem}[Composition]
@@ -148,6 +148,7 @@ If $f$ is $\varepsilon_1$-differentially private and $g$ is $\varepsilon_2$-diff
 
 % SLIDE 5
 \begin{frame}{Laplace mechanism}
+\pause
 \begin{definition}[Sensitivity]
 The sensitivity $\Delta f$ of a deterministic, real-valued function $f$ on databases is the maximum over all pairs of neighboring $D, D'$ of $| f(D) - f(D') |$.
 \end{definition}
@@ -181,18 +182,19 @@ Earlier work is often missing: \pause
 \end{frame}
 
 \begin{frame}{Private $F$-statistic [CBRG18]}
+\pause
 Assume data is on the $[0,1]$ interval. \pause
 \begin{theorem}
 \sse has sensitivity bounded by 7.
 \end{theorem}
 \pause
-$$\widehat{\sse}(D) = \sse(D) + \lap(7/\varepsilon) $$
+$$\widehat{\sse}(D) = \sse(D) + \lap\left(\frac{7}{\varepsilon/2}\right) $$
 \pause
 \begin{theorem}
 \ssa has sensitivity bounded by $9 + 5/n$.
 \end{theorem}
 \pause
-$$\widehat{\ssa}(D) = \ssa(D) + \lap\left(\frac{9+5/n}{\varepsilon}\right) $$
+$$\widehat{\ssa}(D) = \ssa(D) + \lap\left(\frac{9+5/n}{\varepsilon/2}\right) $$
 \end{frame}
 
 % SLIDE 9
@@ -208,10 +210,8 @@ Problem: What is the reference distribution now?
 
 \begin{frame}{Private ANOVA [CBRG18]}
 \begin{figure}
-  \includegraphics[scale=0.3]{images/noisy-ref-dist}
+  \includegraphics[scale=0.35]{images/noisy-ref-dist}
 \end{figure} 
-\centering
-Public reference distribution gives inaccurate $p$-values.
 \end{frame}
 
 
@@ -225,7 +225,8 @@ The \textbf{power} of a hypothesis test is the probability it rejects $H_0$.  It
 \end{frame}
 
 
-\begin{frame}{Improving ANOVA [\textcolor{red}{S}HGRGB19]}
+\begin{frame}{Improving Private ANOVA [\textcolor{blue}{S}HGRGB19]}
+\pause
 Are there other ways of measuring ``dispersion'' (analogous to variance)? \pause
 $$(x_i - \bar{x})^2, \quad \lvert x_i - \bar{x} \rvert, \text{ or maybe }\lvert x_i - \bar{x} \rvert^?$$  \pause
 \begin{align*}
@@ -243,7 +244,7 @@ The new $F_1$ statistic has: \pause
 
 
 
-\begin{frame}{Improving ANOVA [\textcolor{red}{S}HGRGB19]}
+\begin{frame}{Improving Private ANOVA [\textcolor{blue}{S}HGRGB19]}
 Computing $F_1$ privately \pause
 \begin{enumerate}
 	\item $\widehat{\sa}  = \sa + \lap(4/\rho\varepsilon)$
@@ -262,7 +263,7 @@ Computing accurate $p$-values \pause
 \end{frame}
 
 
-\begin{frame}{Improving ANOVA [\textcolor{red}{S}HGRGB19]}
+\begin{frame}{Improving ANOVA [\textcolor{blue}{S}HGRGB19]}
 Need private estimate of $\sigma$ \pause
 \begin{itemize}
 	\item Allocate some of epsilon budget? \pause
@@ -287,6 +288,7 @@ Empirically verified to have valid $p$-values.
 \end{frame}
 
 \begin{frame}{Further Optimization}
+\pause
 Are there other ways of measuring ``dispersion'' (analogous to variance)? 
 $$(x_i - \bar{x})^2, \quad \lvert x_i - \bar{x} \rvert, \text{ or maybe }\lvert x_i - \bar{x} \rvert^?$$  \pause
 
@@ -298,7 +300,7 @@ Perhaps a different exponent? \pause Turns out 1 is optimal.
  \normalsize
 \begin{itemize}
 	\item Not limited to closed-form test statistics \pause
-	\item Room for massive power gains \pause
+	\item Opportunity for significant power gains \pause
 	\item Optimal public test $\centernot \implies$ optimal private test \pause
 \end{itemize}
 
