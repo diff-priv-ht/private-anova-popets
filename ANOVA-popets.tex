@@ -60,6 +60,7 @@
 \section{Differential Privacy}
 
 \begin{frame}{Observed Data, $n=30$}
+\pause
 \begin{figure}
   \includegraphics[scale=0.5]{simulation/observed-plot}
 \end{figure}
@@ -67,7 +68,7 @@
 Are treatment type and post-treatment tumor size dependent?
 \end{frame}
 
-\begin{frame}{Metric for dependency}
+\begin{frame}{Analysis of Variance}
 \pause
 \begin{equation*}
 F\text{-test} = \frac{\text{Variation between groups}}{\text{In-group variation}} \pause 
@@ -147,7 +148,7 @@ If $f$ is $\varepsilon_1$-differentially private and $g$ is $\varepsilon_2$-diff
 \end{frame}
 
 % SLIDE 5
-\begin{frame}{Laplace mechanism}
+\begin{frame}{Laplace mechanism [DMNS06]}
 \pause
 \begin{definition}[Sensitivity]
 The sensitivity $\Delta f$ of a deterministic, real-valued function $f$ on databases is the maximum over all pairs of neighboring $D, D'$ of $| f(D) - f(D') |$.
@@ -176,7 +177,8 @@ where $Y \leftarrow \lap(\Delta f/\varepsilon)$. The Laplace mechanism is $\vare
 \end{itemize}
 Earlier work is often missing: \pause
 \begin{itemize}
-\item Rigorous p-value computations \pause
+\item Accurate $p$-value computations \pause
+\item Demonstrated validity of $p$-values \pause
 \item Power analysis
 \end{itemize}
 \end{frame}
@@ -187,14 +189,13 @@ Assume data is on the $[0,1]$ interval. \pause
 \begin{theorem}
 \sse has sensitivity bounded by 7.
 \end{theorem}
-\pause
-$$\widehat{\sse}(D) = \sse(D) + \lap\left(\frac{7}{\varepsilon/2}\right) $$
-\pause
 \begin{theorem}
 \ssa has sensitivity bounded by $9 + 5/n$.
 \end{theorem}
 \pause
-$$\widehat{\ssa}(D) = \ssa(D) + \lap\left(\frac{9+5/n}{\varepsilon/2}\right) $$
+$$\widehat{\sse}(D) = \sse(D) + \lap\left(\frac{7}{\varepsilon/2}\right) $$
+
+$$\widehat{\ssa}(D) = \ssa(D) + \lap\left(\frac{9+5/n}{\varepsilon/2}\right) $$ 
 \end{frame}
 
 % SLIDE 9
@@ -204,7 +205,10 @@ $$\widehat{F}(D) = \frac{\widehat{\ssa}(D)/(k-1)}{\widehat{\sse}(D)/(n-k)}$$
 
  \pause
  \centering
-Problem: What is the reference distribution now?
+Problem: What is the reference distribution now? \pause
+\begin{figure}
+\includegraphics[scale=0.7]{simulation/null-dist}
+\end{figure}
 \end{frame}
 
 
@@ -219,9 +223,8 @@ Problem: What is the reference distribution now?
   \begin{figure}
   \includegraphics[scale=0.45]{images/campbellpower}
   \end{figure}
-  \begin{definition}[Power]
-The \textbf{power} of a hypothesis test is the probability it rejects $H_0$.  It depends on the alternate distribution $H_A$ and $n$.
-\end{definition}
+  \centering
+ Fixed effect size: $\mu = [0.35, 0.5, 0.65], \sigma = 0.15$.
 \end{frame}
 
 
@@ -284,6 +287,8 @@ Empirically verified to have valid $p$-values.
   \begin{figure}
   \includegraphics[scale=0.12]{images/f1-vs-f2}
   \end{figure}
+  \centering
+  Fixed effect size: $\mu = [0.35, 0.5, 0.65], \sigma = 0.15$, and $\varepsilon = 1$.
 
 \end{frame}
 
@@ -296,10 +301,11 @@ Perhaps a different exponent? \pause Turns out 1 is optimal.
 \end{frame}
 
 \begin{frame}{Conclusion}
+\pause
 \large In the private framework \ldots \par \pause
  \normalsize
 \begin{itemize}
-	\item Not limited to closed-form test statistics \pause
+	\item Not limited to test statistics with closed-form reference distributions \pause
 	\item Opportunity for significant power gains \pause
 	\item Optimal public test $\centernot \implies$ optimal private test \pause
 \end{itemize}
