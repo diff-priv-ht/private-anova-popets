@@ -65,13 +65,14 @@
   \includegraphics[scale=0.5]{simulation/observed-plot}
 \end{figure}
 \pause
-Are treatment type and post-treatment tumor size dependent?
+Random variation or real dependency?
 \end{frame}
 
 \begin{frame}{Analysis of Variance}
 \pause
+Metric for how much variation is group-dependent 
 \begin{equation*}
-F\text{-test} = \frac{\text{Variation between groups}}{\text{In-group variation}} \pause 
+F = \frac{\text{Variation between groups}}{\text{In-group variation}} \pause 
 \end{equation*}
 
 \begin{equation*}
@@ -81,6 +82,14 @@ F\text{-test} = \frac{\text{Variation between groups}}{\text{In-group variation}
 \begin{equation*}
 \sse(D) = \sum_{i=1}^{n}  (y_{i}-\bar{y}_{c_i})^2/(n-k)
 \end{equation*}
+\end{frame}
+
+\begin{frame}{Observed Data, $n=30$}
+\begin{figure}
+  \includegraphics[scale=0.5]{simulation/observed-plot}
+\end{figure}
+\centering
+$F = 4.988$
 \end{frame}
 
 
@@ -288,7 +297,11 @@ Empirically verified to have valid $p$-values.
   \includegraphics[scale=0.12]{images/f1-vs-f2}
   \end{figure}
   \centering
-  Fixed effect size: $\mu = [0.35, 0.5, 0.65], \sigma = 0.15$, and $\varepsilon = 1$.
+ \small  Fixed effect size: $\mu = [0.35, 0.5, 0.65], \sigma = 0.15$, and $\varepsilon = 1$.
+  
+  \pause
+  \centering
+  \large \textcolor{blue}{Optimal public test $\centernot \implies $ optimal private test}
 
 \end{frame}
 
