@@ -68,19 +68,22 @@
 Random variation or real dependency?
 \end{frame}
 
-\begin{frame}{Analysis of Variance}
+\begin{frame}{Analysis of Variance Metric}
 \pause
-Metric for how much variation is group-dependent 
 \begin{equation*}
-F = \frac{\text{Variation between groups}}{\text{In-group variation}} \pause 
+ \frac{\text{Variation between groups}}{\text{In-group variation}} \pause 
+\end{equation*}
+\pause
+The metric:
+\begin{equation*}
+\ssa(D) = \sum_{j=1}^{k} n_j (\bar{y}_j - \bar{y})^2
 \end{equation*}
 
 \begin{equation*}
-\ssa(D) = \sum_{j=1}^{k} n_j (\bar{y}_j - \bar{y})^2/(k-1)
+\sse(D) = \sum_{i=1}^{n}  (y_{i}-\bar{y}_{c_i})^2
 \end{equation*}
-
 \begin{equation*}
-\sse(D) = \sum_{i=1}^{n}  (y_{i}-\bar{y}_{c_i})^2/(n-k)
+F = \frac{\ssa/(k-1)}{\sse/(n-k)}
 \end{equation*}
 \end{frame}
 
@@ -94,6 +97,7 @@ $F = 4.988$
 
 
 \begin{frame}{Simulate Null Data}
+\pause
 \begin{figure}
   \includegraphics[scale=0.60]{simulation/null-plots}
 \end{figure}
@@ -337,15 +341,6 @@ Funding
 
 %This material is based upon work supported by the National Science Foundation under Grant No. SaTC-1817245 and by the Gillespie Family Student Research Fund.
 \end{frame}
-
-
-
-\begin{frame}{}
-    \begin{center}
-        \Huge Thank you
-    \end{center}    
-\end{frame}
-
 
 
 \end{document}
